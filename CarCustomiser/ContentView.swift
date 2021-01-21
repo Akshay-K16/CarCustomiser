@@ -8,9 +8,143 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var starterCars = StarterCars()
+    @State private var selectedCar = 0 {
+        didSet {
+            if selectedCar >= starterCars.cars.count {
+                selectedCar = 0
+            }
+        }
+    }
+    
+    @State private var exhaustPackage = false
+    @State private var tiresPackage = false
+    @State private var brakesPackage = false
+    @State private var ECUPackage = false
+    @State private var remainingFunds = 1000
+    
+    var exhaustPackageDisabled: Bool {
+        if exhaustPackage == false && remainingFunds < 500 {
+            return true
+        }
+        return false
+    }
+    
+    var tiresPackageDisabled: Bool {
+        if tiresPackage == false && remainingFunds < 500 {
+            return true
+        }
+        return false
+    }
+    
+    var brakesPackageDisabled: Bool {
+        if brakesPackage == false && remainingFunds < 500 {
+            return true
+        }
+        return false
+    }
+    
+    var ECUPackageDisabled: Bool {
+        if ECUPackage == false && remainingFunds < 500 {
+            return true
+        }
+        return false
+    }
+    
+    
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        let exhaustPackageBinding = Binding<Bool> (
+            get : { self.exhaustPackage },
+            set : { newValue in
+                self.exhaustPackage = newValue
+                if newValue == true {
+                    starterCars.cars[selectedCar].topSpeed += 5
+                    remainingFunds -= 500
+                } else {
+                    starterCars.cars[selectedCar].topSpeed -= 5
+                    remainingFunds += 500
+                }
+            }
+        )
+        
+        let tiresPackageBinding = Binding<Bool> (
+            get : { self.tiresPackage },
+            set : { newValue in
+                self.tiresPackage = newValue
+                if newValue == true {
+                    starterCars.cars[selectedCar].handling += 2
+                    remainingFunds -= 500
+                } else {
+                    starterCars.cars[selectedCar].handling -= 2
+                    remainingFunds += 500
+
+                }
+            }
+        )
+        
+        let brakesPackageBinding = Binding<Bool> (
+            get : { self.brakesPackage },
+            set : { newValue in
+                self.brakesPackage = newValue
+                if newValue == true {
+                    starterCars.cars[selectedCar].handling += 1
+                    remainingFunds -= 500
+                } else {
+                    starterCars.cars[selectedCar].handling -= 1
+                    remainingFunds += 500
+
+                }
+            }
+        )
+        
+        let ECUPackageBinding = Binding<Bool> (
+            get : { self.ECUPackage },
+            set : { newValue in
+                self.ECUPackage = newValue
+                if newValue == true {
+                    starterCars.cars[selectedCar].acceleration += 0.5
+                    remainingFunds -= 500
+                } else {
+                    starterCars.cars[selectedCar].acceleration -= 0.5
+                    remainingFunds += 500
+
+                }
+            }
+        )
+        VStack{
+            Form {
+                VStack( alignment: .leading, spacing: 20) {
+                    Text(starterCars.cars[selectedCar].displayStats())
+                    Button("Next Car", action: {
+                        selectedCar += 1
+                        resetDisplay()
+                    })
+                }
+                
+                Section {
+                    Toggle("Exhaust Package (Cost: 500)", isOn: exhaustPackageBinding)
+                        .disabled(exhaustPackageDisabled)
+                    Toggle("Tires Package (Cost: 500)", isOn: tiresPackageBinding)
+                        .disabled(tiresPackageDisabled)
+                    Toggle("Brakes Package (Cost: 500)", isOn: brakesPackageBinding)
+                        .disabled(brakesPackageDisabled)
+                    Toggle("ECU Package (Cost: 500)", isOn: ECUPackageBinding)
+                        .disabled(ECUPackageDisabled)
+                }
+            }
+            Text("Remaining Funds: \(remainingFunds)")
+                .foregroundColor(.black)
+                .baselineOffset(10.0)
+        }
+    }
+    
+    func resetDisplay(){
+        remainingFunds = 1000
+        exhaustPackage = false
+        tiresPackage = false
+        brakesPackage = false
+        ECUPackage = false
+        starterCars = StarterCars()
     }
 }
 

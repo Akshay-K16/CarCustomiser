@@ -13,6 +13,10 @@
 		38792B0925B8448400102327 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38792B0825B8448400102327 /* Preview Assets.xcassets */; };
 		38792B1425B8448400102327 /* CarCustomiserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38792B1325B8448400102327 /* CarCustomiserTests.swift */; };
 		38792B1F25B8448400102327 /* CarCustomiserUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38792B1E25B8448400102327 /* CarCustomiserUITests.swift */; };
+		38792B3025B8464900102327 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38792B2F25B8464900102327 /* Car.swift */; };
+		38792B3125B8464900102327 /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38792B2F25B8464900102327 /* Car.swift */; };
+		38F9A42F25B9EC8B00DB2A4B /* StarterCars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F9A42E25B9EC8B00DB2A4B /* StarterCars.swift */; };
+		38F9A43025B9EC8B00DB2A4B /* StarterCars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F9A42E25B9EC8B00DB2A4B /* StarterCars.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +49,8 @@
 		38792B1A25B8448400102327 /* CarCustomiserUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CarCustomiserUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38792B1E25B8448400102327 /* CarCustomiserUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarCustomiserUITests.swift; sourceTree = "<group>"; };
 		38792B2025B8448400102327 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38792B2F25B8464900102327 /* Car.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
+		38F9A42E25B9EC8B00DB2A4B /* StarterCars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarterCars.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,8 @@
 				38792B0525B8448400102327 /* Assets.xcassets */,
 				38792B0A25B8448400102327 /* Info.plist */,
 				38792B0725B8448400102327 /* Preview Content */,
+				38792B2F25B8464900102327 /* Car.swift */,
+				38F9A42E25B9EC8B00DB2A4B /* StarterCars.swift */,
 			);
 			path = CarCustomiser;
 			sourceTree = "<group>";
@@ -261,6 +269,8 @@
 			files = (
 				38792B0425B8448200102327 /* ContentView.swift in Sources */,
 				38792B0225B8448200102327 /* CarCustomiserApp.swift in Sources */,
+				38F9A42F25B9EC8B00DB2A4B /* StarterCars.swift in Sources */,
+				38792B3025B8464900102327 /* Car.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +278,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38792B3125B8464900102327 /* Car.swift in Sources */,
 				38792B1425B8448400102327 /* CarCustomiserTests.swift in Sources */,
+				38F9A43025B9EC8B00DB2A4B /* StarterCars.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
