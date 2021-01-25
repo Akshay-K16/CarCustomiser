@@ -21,36 +21,29 @@ struct ContentView: View {
     @State private var tiresPackage = false
     @State private var brakesPackage = false
     @State private var ECUPackage = false
+    
     @State private var remainingFunds = 1000
+    @State private var remainingTime = 30
+    
+    @State private var disableAll: Bool = false
     
     var exhaustPackageDisabled: Bool {
-        if exhaustPackage == false && remainingFunds < 500 {
-            return true
-        }
-        return false
+        return disableAll ? true : exhaustPackage ? false : remainingFunds < 500 ? true : false
     }
     
     var tiresPackageDisabled: Bool {
-        if tiresPackage == false && remainingFunds < 500 {
-            return true
-        }
-        return false
+        return disableAll ? true : tiresPackage ? false : remainingFunds < 500 ? true : false
     }
     
     var brakesPackageDisabled: Bool {
-        if brakesPackage == false && remainingFunds < 500 {
-            return true
-        }
-        return false
+        return disableAll ? true : brakesPackage ? false : remainingFunds < 500 ? true : false
     }
     
     var ECUPackageDisabled: Bool {
-        if ECUPackage == false && remainingFunds < 500 {
-            return true
-        }
-        return false
+        return disableAll ? true : ECUPackage ? false : remainingFunds < 500 ? true : false
     }
     
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
     var body: some View {
         let exhaustPackageBinding = Binding<Bool> (
@@ -112,13 +105,21 @@ struct ContentView: View {
             }
         )
         VStack{
+            Text("\(remainingTime)s")
+                .onReceive(timer) { _ in
+                    if self.remainingTime > 0 {
+                        self.remainingTime -= 1
+                    } else {
+                        self.disableAll = true
+                    }
+                }
             Form {
                 VStack( alignment: .leading, spacing: 20) {
                     Text(starterCars.cars[selectedCar].displayStats())
                     Button("Next Car", action: {
                         selectedCar += 1
                         resetDisplay()
-                    })
+                    }).disabled(disableAll)
                 }
                 
                 Section {

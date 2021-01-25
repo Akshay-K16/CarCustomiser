@@ -21,14 +21,67 @@ class CarCustomiserUITests: XCTestCase {
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    
+    func testBuyingPackagesChangesRemainingFunds() {
+        // Arrange
         let app = XCUIApplication()
         app.launch()
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        // Act
+        let tablesQuery = app.tables
+        tablesQuery/*@START_MENU_TOKEN@*/.switches["Exhaust Package (Cost: 500)"]/*[[".cells[\"Exhaust Package (Cost: 500)\"].switches[\"Exhaust Package (Cost: 500)\"]",".switches[\"Exhaust Package (Cost: 500)\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        tablesQuery/*@START_MENU_TOKEN@*/.switches["Tires Package (Cost: 500)"]/*[[".cells[\"Tires Package (Cost: 500)\"].switches[\"Tires Package (Cost: 500)\"]",".switches[\"Tires Package (Cost: 500)\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+    
+        
+        // Assert
+        XCTAssertEqual(app.staticTexts.element(boundBy: 1).label, "Remaining Funds: 0")
+    }
+
+    func testWhenBoughtTiresAndExhaustPackageOtherTwoUpgradesAreDisabled() throws {
+        // Arrange
+        let app = XCUIApplication()
+        app.launch()
+
+        // Act
+        let tablesQuery = app.tables
+        tablesQuery/*@START_MENU_TOKEN@*/.switches["Exhaust Package (Cost: 500)"]/*[[".cells[\"Exhaust Package (Cost: 500)\"].switches[\"Exhaust Package (Cost: 500)\"]",".switches[\"Exhaust Package (Cost: 500)\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        tablesQuery/*@START_MENU_TOKEN@*/.switches["Tires Package (Cost: 500)"]/*[[".cells[\"Tires Package (Cost: 500)\"].switches[\"Tires Package (Cost: 500)\"]",".switches[\"Tires Package (Cost: 500)\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        // Assert
+        XCTAssertEqual(tablesQuery/*@START_MENU_TOKEN@*/.switches["Brakes Package (Cost: 500)"]/*[[".cells[\"Brakes Package (Cost: 500)\"].switches[\"Brakes Package (Cost: 500)\"]",".switches[\"Brakes Package (Cost: 500)\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.isEnabled, false)
+        XCTAssertEqual(tablesQuery/*@START_MENU_TOKEN@*/.switches["ECU Package (Cost: 500)"]/*[[".cells[\"ECU Package (Cost: 500)\"].switches[\"ECU Package (Cost: 500)\"]",".switches[\"ECU Package (Cost: 500)\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.isEnabled, false)
+    }
+    
+    func testNextCarButtonResetsTogglesAndRemainingFunds() throws {
+        // Arrange
+        let app = XCUIApplication()
+        app.launch()
+
+        // Act
+        let tablesQuery = app.tables
+        tablesQuery/*@START_MENU_TOKEN@*/.switches["Exhaust Package (Cost: 500)"]/*[[".cells[\"Exhaust Package (Cost: 500)\"].switches[\"Exhaust Package (Cost: 500)\"]",".switches[\"Exhaust Package (Cost: 500)\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        tablesQuery/*@START_MENU_TOKEN@*/.switches["Tires Package (Cost: 500)"]/*[[".cells[\"Tires Package (Cost: 500)\"].switches[\"Tires Package (Cost: 500)\"]",".switches[\"Tires Package (Cost: 500)\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.tables/*@START_MENU_TOKEN@*/.buttons["Next Car"]/*[[".cells[\"Make: Mazda\\nModel: MX-5\\nTop Speed: 125mph\\nAcceleration: (0-60): 7.7s\\nHandling: 4, Next Car\"].buttons[\"Next Car\"]",".buttons[\"Next Car\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+    
+        
+        // Assert
+        XCTAssertEqual(tablesQuery/*@START_MENU_TOKEN@*/.switches["Exhaust Package (Cost: 500)"]/*[[".cells[\"Exhaust Package (Cost: 500)\"].switches[\"Exhaust Package (Cost: 500)\"]",".switches[\"Exhaust Package (Cost: 500)\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.isSelected, false)
+        XCTAssertEqual(tablesQuery/*@START_MENU_TOKEN@*/.switches["Tires Package (Cost: 500)"]/*[[".cells[\"Tires Package (Cost: 500)\"].switches[\"Tires Package (Cost: 500)\"]",".switches[\"Tires Package (Cost: 500)\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.isSelected, false)
+        XCTAssertEqual(app.staticTexts.element(boundBy: 1).label, "Remaining Funds: 1,000")
+    }
+    
+    func testNextCarButtonChangesCar() {
+        // Arrange
+        let app = XCUIApplication()
+        app.launch()
+
+        // Act
+        app.tables/*@START_MENU_TOKEN@*/.buttons["Next Car"]/*[[".cells[\"Make: Mazda\\nModel: MX-5\\nTop Speed: 125mph\\nAcceleration: (0-60): 7.7s\\nHandling: 4, Next Car\"].buttons[\"Next Car\"]",".buttons[\"Next Car\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        // Assert
+        XCTAssertEqual(app.staticTexts.element(boundBy: 3).label, "Make: Volkswagen\nModel: Golf\nTop Speed: 110mph\nAcceleration: (0-60): 6.2s\nHandling: 5")
     }
 
     func testLaunchPerformance() throws {
